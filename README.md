@@ -1,2 +1,2 @@
 # GeriMcL_GitHub
-Used for Coursera Work
+Used for Coursera work
