@@ -1,0 +1,120 @@
+# Import Standard Libraies
+
+import numpy as np # library to handle data in a vectorized manner
+
+import pandas as pd # library for data analsysis
+pd.set_option('display.max_columns', None)
+pd.set_option('display.max_rows', None)
+
+import json # library to handle JSON files
+
+!conda install -c conda-forge geopy --yes # uncomment this line if you haven't completed the Foursquare API lab
+from geopy.geocoders import Nominatim # convert an address into latitude and longitude values
+
+import requests # library to handle requests
+from pandas.io.json import json_normalize # tranform JSON file into a pandas dataframe
+
+# Matplotlib and associated plotting modules
+import matplotlib.cm as cm
+import matplotlib.colors as colors
+
+# import k-means from clustering stage
+from sklearn.cluster import KMeans
+
+import folium # map rendering library
+import io
+
+
+print('Libraries imported.')
+
+# CREATE POSTCODE, BOROUGH, NEIGHBOURHOO DATAFRAME
+
+header = {
+  "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.75 Safari/537.36",
+  "X-Requested-With": "XMLHttpRequest"
+}
+
+# Create Dataframe 'df' Comprising Only Text from Source Website
+
+r = requests.get("https://en.wikipedia.org/wiki/List_of_postal_codes_of_Canada:_M", headers=header)
+
+table = pd.read_html(r.text)
+
+df=pd.DataFrame(table[0])
+
+# Insert Title Columns: PostalCode, Borough, and Neighborhood
+
+df.columns=['Postcode','Borough','Neighbourhood']
+
+df.drop([0],axis=0,inplace=True)
+
+df.reset_index()
+
+# Drop Rows Where Borough is 'Not assigned'
+
+df.drop(df[df['Borough']=="Not assigned"].index,axis=0, inplace=True)
+
+# Create New Dataframe, 'df_output' and Group Rows Having Common Post Codes and Concatonate Neighbourhoods 
+
+
+df_output = df.groupby("Postcode").agg(lambda x:','.join(set(x)))
+
+df_output.loc[df_output['Neighbourhood']=="Not assigned",'Neighbourhood']=df_output.loc[df_output['Neighbourhood']=="Not assigned",'Borough']
+
+# Create Clone Dataframe 'df_output_final' From 'df_output'
+
+df_output_final = df_output
+
+# Fix Data Values in 'df_output_final' for Subsequent Processing
+
+df_output_final = df_output_final.filter(['Postcode','Borough','Neighbourhood'], axis=1)
+
+# Output Shape of 'df_output_final'
+
+df_output_final.shape
+
+# ADD COORDINATES TO ABOVE DATAFRAME
+
+header = {
+  "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.75 Safari/537.36",
+  "X-Requested-With": "XMLHttpRequest"
+}
+
+# Create Dataframe 'df' Comprising Only Text from Source Website
+
+r = requests.get("https://en.wikipedia.org/wiki/List_of_postal_codes_of_Canada:_M", headers=header)
+
+table = pd.read_html(r.text)
+
+df=pd.DataFrame(table[0])
+
+# Insert Title Columns: PostalCode, Borough, and Neighborhood
+
+df.columns=['Postcode','Borough','Neighbourhood']
+
+df.drop([0],axis=0,inplace=True)
+
+df.reset_index()
+
+# Drop Rows Where Borough is 'Not assigned'
+
+df.drop(df[df['Borough']=="Not assigned"].index,axis=0, inplace=True)
+
+# Create New Dataframe, 'df_output' and Group Rows Having Common Post Codes and Concatonate Neighbourhoods 
+
+
+df_output = df.groupby("Postcode").agg(lambda x:','.join(set(x)))
+
+df_output.loc[df_output['Neighbourhood']=="Not assigned",'Neighbourhood']=df_output.loc[df_output['Neighbourhood']=="Not assigned",'Borough']
+
+# Create Clone Dataframe 'df_output_final' From 'df_output'
+
+df_output_final = df_output
+
+# Fix Data Values in 'df_output_final' for Subsequent Processing
+
+df_output_final = df_output_final.filter(['Postcode','Borough','Neighbourhood'], axis=1)
+
+# Output Shape of 'df_output_final'
+
+df_output_final.shape
