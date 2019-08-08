@@ -1,0 +1,7 @@
+Data repositories (including websites) to be used for this project include:
+
+•	TfL (Transport for London): postal addresses of each bicycle docking station to be scraped from the TfL website, i.e.  https://tfl.gov.uk/modes/cycling/santander-cycles/find-a-docking-station
+•	FourSquare: budget hotels, eating places, museums, cinemas, clubs, etc., based on coordinates of bicycle doing stations in areas that should be acceptable to users.  This data will be analysed using an appropriate statistical approach for clustering data points, such as K-means clustering
+•	Mayor for London’s London Datastore: Ward Level Crime (Most Recent 24 months).  This is a publicly available CSV file downloaded able from the Mayor of London’s website, i.e. https://data.london.gov.uk/dataset/recorded_crime_summary
+
+Data will be extracted from these databases, processed and used to provide information to visitors.
