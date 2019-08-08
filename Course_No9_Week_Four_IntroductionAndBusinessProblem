@@ -4,11 +4,4 @@ London is one of the UK’s most densely populated and visited cities.  In commo
 BUSINESS PROBLEM
 The problem to be solved by this project is how to find the best places to stay on a budget in London that are relatively safe and are also within easy walking distance of public bicycle docking stations - assuming that many visitors to London want to know where the cheaper and relatively safer areas are to stay and visit and which are conveniently located for public bicycle docking stations.  Users of the new system will define what they judge to be safe using a questionnaire comprising various criteria – to be determined.  The results will be used to compare with visitor choices with local crime statistics in London in order to help identify places of likely interest to visitors.  
 
-Data repositories (including websites) to be used for this project include:
-
-•	FourSquare: budget hotels, eating places, museums, cinemas, clubs
-•	TfL (Transport for London): postal addresses of each bicycle docking station
-•	Mayor for London’s London Datastore: Ward Level Crime (Most Recent 24 months)
-
-Data will be extracted from these databases, processed and used to provide information to visitors.
 
